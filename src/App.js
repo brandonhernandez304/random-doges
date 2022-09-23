@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import Dogs from './components/Dogs'
+import Button from "./components/Button";
 
 function App() {
+  //State holds dog data 
+  const [ randomDog, setDog ] = React.useState ( {} )
+  const handleSubmit = async () =>{
+    //random dog url
+    const randomDog="https://dog.ceo/api/breeds/image/random";
+    
+    let wait = await fetch(randomDog);
+    let json = await wait.json()
+    console.log(json)
+    setDog(json)
+  }
+  //Function to get the dogs now
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Random Doges</h1>
+      <Button handleSubmitFromApp={handleSubmit} />
+      <Dogs randomDog={randomDog}/>
     </div>
   );
 }
